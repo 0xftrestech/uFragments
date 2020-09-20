@@ -9,4 +9,7 @@ export default {
   solc: {
     version: '0.4.24',
   },
+  mocha: {
+    timeout: 100000,
+  },
 } as BuidlerConfig

@@ -1,16 +1,15 @@
 import { ethers, upgrades, waffle } from '@nomiclabs/buidler'
 import { Contract, Signer, BigNumber, BigNumberish, Event } from 'ethers'
-import { BigNumber as BN } from 'bignumber.js'
 import { TransactionResponse } from '@ethersproject/providers'
 import { expect } from 'chai'
 import { Result } from 'ethers/lib/utils'
-import { increaseTime } from '../utils/utils'
+import { imul, increaseTime } from '../utils/utils'
 
 let uFragmentsPolicy: Contract,
   mockUFragments: Contract,
   mockMarketOracle: Contract,
   mockCpiOracle: Contract
-let r: TransactionResponse, prevEpoch: BigNumber, prevTime: BigNumber
+let prevEpoch: BigNumber, prevTime: BigNumber
 let deployer: Signer, user: Signer, orchestrator: Signer
 
 const MAX_RATE = ethers.utils.parseUnits('1', 24)
@@ -27,12 +26,6 @@ const INITIAL_RATE_5P_MORE = imul(INITIAL_RATE, '1.05', 1)
 const INITIAL_RATE_5P_LESS = imul(INITIAL_RATE, '0.95', 1)
 const INITIAL_RATE_60P_MORE = imul(INITIAL_RATE, '1.6', 1)
 const INITIAL_RATE_2X = INITIAL_RATE.mul(2)
-
-function imul(a: BigNumberish, b: BigNumberish, c: BigNumberish) {
-  return ethers.BigNumber.from(
-    new BN(a.toString()).times(b.toString()).idiv(c.toString()).toString(),
-  )
-}
 
 async function mockedUpgradablePolicy() {
   // get signers
