@@ -4,6 +4,7 @@ import { BigNumber as BN } from 'bignumber.js'
 import { TransactionResponse } from '@ethersproject/providers'
 import { expect } from 'chai'
 import { Result } from 'ethers/lib/utils'
+import { increaseTime } from '../utils/utils'
 
 let uFragmentsPolicy: Contract,
   mockUFragments: Contract,
@@ -110,13 +111,6 @@ async function mockExternalData(
   await mockCpiOracle.connect(deployer).storeData(cpi)
   await mockCpiOracle.connect(deployer).storeValidity(cpiValidity)
   await mockUFragments.connect(deployer).storeSupply(uFragSupply)
-}
-
-async function increaseTime(seconds: BigNumberish) {
-  const now = (await ethers.provider.getBlock('latest')).timestamp
-  await ethers.provider.send('evm_mine', [
-    ethers.BigNumber.from(seconds).add(now).toNumber(),
-  ])
 }
 
 async function parseRebaseLog(response: Promise<TransactionResponse>) {
@@ -1009,7 +1003,6 @@ describe('UFragmentsPolicy:Rebase', async function () {
     rbWindow: BigNumber,
     minRebaseTimeIntervalSec: BigNumber,
     now: BigNumber,
-    prevRebaseTime: BigNumber,
     nextRebaseWindowOpenTime: BigNumber,
     timeToWait: BigNumber,
     lastRebaseTimestamp: BigNumber
