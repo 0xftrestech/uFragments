@@ -20,7 +20,7 @@
   "scripts": {
     "compile": "yarn buidler compile",
     "test": "yarn buidler test",
-    "coverage": "yarn buidler coverage",
+    "coverage": "yarn buidler coverage --testfiles 'test/unit/*.ts'",
     "format": "yarn prettier --config .prettierrc --write '**/*.ts' 'contracts/**/*.sol'",
     "lint": "yarn solhint 'contracts/**/*.sol'"
   },

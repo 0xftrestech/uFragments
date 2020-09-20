@@ -861,17 +861,12 @@ describe('UFragmentsPolicy:Rebase', async function () {
 
     it('should call uFrag Rebase', async function () {
       const r = uFragmentsPolicy.connect(orchestrator).rebase()
-      prevEpoch = await uFragmentsPolicy.epoch()
       await expect(r)
         .to.emit(mockUFragments, 'FunctionCalled')
         .withArgs('UFragments', 'rebase', uFragmentsPolicy.address)
-      const fnArgs = mockUFragments.interface.parseLog(
-        (await (await r).wait()).logs[5],
-      )
-      const parsedFnArgs = Object.keys(fnArgs.args).reduce((m, k) => {
-        return fnArgs.args[k].map((d: Result) => d.toNumber()).concat(m)
-      }, [])
-      expect(parsedFnArgs).to.include.members([prevEpoch.toNumber(), 20])
+      await expect(r)
+        .to.emit(mockUFragments, 'FunctionArguments')
+        .withArgs([prevEpoch.add(1)], [20])
     })
   })
 })

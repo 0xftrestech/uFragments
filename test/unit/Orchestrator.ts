@@ -281,7 +281,7 @@ describe('Orchestrator', function () {
       await orchestrator
         .connect(deployer)
         .addTransaction(mockDownstream.address, updateTwoArgsEncoded.data)
-      await expect(orchestrator.connect(deployer).rebase(0)).to.be.reverted
+      await expect(orchestrator.connect(deployer).rebase()).to.be.reverted
     })
 
     it('should have 3 transactions', async function () {
@@ -318,6 +318,13 @@ describe('Orchestrator', function () {
         ).to.not.be.reverted
       })
 
+      it('should revert if index out of bounds', async function () {
+        expect(await orchestrator.transactionsSize()).to.lt(5)
+        await expect(
+          orchestrator.connect(deployer).setTransactionEnabled(5, true),
+        ).to.be.reverted
+      })
+
       it('should not be callable by others', async function () {
         expect(await orchestrator.transactionsSize()).to.gt(0)
         await expect(orchestrator.connect(user).setTransactionEnabled(0, true))
@@ -329,6 +336,12 @@ describe('Orchestrator', function () {
       it('should not be callable by others', async function () {
         expect(await orchestrator.transactionsSize()).to.gt(0)
         await expect(orchestrator.connect(user).removeTransaction(0)).to.be
+          .reverted
+      })
+
+      it('should revert if index out of bounds', async function () {
+        expect(await orchestrator.transactionsSize()).to.lt(5)
+        await expect(orchestrator.connect(deployer).removeTransaction(5)).to.be
           .reverted
       })
 
