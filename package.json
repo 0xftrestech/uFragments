@@ -32,9 +32,10 @@
     "@types/chai": "^4.2.12",
     "@types/mocha": "^8.0.3",
     "@types/node": "^14.6.1",
+    "bignumber.js": "^9.0.0",
     "chai": "^4.2.0",
     "ethereum-waffle": "^3.0.0",
-    "ethers": "^5.0.0",
+    "ethers": "^5.0.13",
     "prettier": "^2.1.1",
     "prettier-plugin-solidity": "^1.0.0-alpha.57",
     "solhint": "^3.2.0",
@@ -44,7 +45,6 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "openzeppelin-eth": "2.0.2",
-    "zos-lib": "2.2.2"
+    "openzeppelin-eth": "2.0.2-standalone"
   }
 }
