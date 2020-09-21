@@ -5,6 +5,8 @@ usePlugin('@nomiclabs/buidler-waffle')
 usePlugin('@openzeppelin/buidler-upgrades')
 usePlugin('solidity-coverage')
 
+require('./scripts/deploy')
+
 export default {
   solc: {
     version: '0.4.24',
